@@ -802,6 +802,102 @@ window.dash = (() => {
   dash.draw('ay_banked', adviserYearDraw([['banked_2023', gbpFull], ['banked_2024', gbpFull], ['banked_2025', gbpFull], ['banked_2026', gbpFull], ['proj_banked_2026', gbpFull, 'proj']]));
   dash.draw('ay_wtp', adviserYearDraw([['wtp_2023', d3.format('.1%')], ['wtp_2024', d3.format('.1%')], ['wtp_2025', d3.format('.1%')], ['wtp_2026', d3.format('.1%')]]));
 
+  // ---------- corporate tables ----------
+  dash.draw('corp', (tb) => {
+    const d = dash.data('corp_ytd');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const att = (td, v) => {
+      if (v == null) { td.text('—'); return; }
+      const w = td.append('div').attr('class', 'ss-att');
+      w.append('div').attr('class', 'bar').append('i').style('width', Math.min(v, 1) * 100 + '%').style('background', v >= 1 ? 'var(--color-ok)' : v >= 0.85 ? dash.colors[0] : 'var(--cds-chart-status-critical)');
+      w.append('span').text(d3.format('.0%')(v));
+    };
+    const tr = d3.select(tb).selectAll('tr').data(d.data).join('tr').attr('class', (r) => (r.adviser === 'Team' ? 'total' : null));
+    tr.each(function (r) {
+      const row = d3.select(this);
+      row.append('td').text(r.adviser);
+      row.append('td').text(d3.format(',')(r.apps));
+      row.append('td').text(r.corp_target == null ? '—' : d3.format(',')(r.corp_target));
+      att(row.append('td'), r.att);
+      row.append('td').text(d3.format(',.0f')(r.proj_apps));
+      att(row.append('td'), r.proj_att);
+    });
+  });
+
+  dash.draw('corp_pivot', (tb) => {
+    const d = dash.data('corp_pivot');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const ms = MONTHS.slice(0, 11);
+    const ad = d.data.filter((r) => r.adviser !== 'Team');
+    const max = d3.max(ad, (r) => d3.max(ms, (m) => r[m] || 0)) || 1;
+    const tr = d3.select(tb).selectAll('tr').data(d.data).join('tr').attr('class', (r) => (r.adviser === 'Team' ? 'total' : null));
+    tr.each(function (r) {
+      const row = d3.select(this);
+      row.append('td').text(r.adviser);
+      ms.forEach((m) => {
+        const v = r[m];
+        const td = row.append('td').attr('class', 'h').text(v ? String(v) : '');
+        if (v && r.adviser !== 'Team') {
+          td.style('background', `color-mix(in srgb, ${dash.colors[2] || dash.colors[0]} ${Math.round(8 + 62 * (v / max))}%, transparent)`);
+          if (v / max > 0.55) td.style('color', 'white');
+        }
+      });
+      row.append('td').text(String(r.total));
+    });
+  });
+
+  // ---------- written and banked by year ----------
+  dash.draw('yearbars', (el) => {
+    const d = dash.data('years');
+    el.replaceChildren();
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = d.data;
+    const W = Math.max(el.clientWidth, 280), H = 220;
+    const c = dash.colors;
+    const legend = d3.select(el).append('div').attr('class', 'ss-legend');
+    [['Written', c[0]], ['Banked', c[1]]].forEach(([n, col]) => { const s = legend.append('span'); s.append('i').style('background', col); s.append('span').text(n); });
+    const s2 = legend.append('span'); s2.append('i').style('background', 'none').style('border', '1.5px dashed var(--cds-chart-reference)'); s2.append('span').text('Projected');
+    const max = d3.max(rows, (r) => r.written) || 1;
+    const y = d3.scaleLinear([0, max * 1.12], [H - 34, 18]).nice();
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).style('display', 'block').style('overflow', 'visible');
+    const ticks = y.ticks(4);
+    const probe = svg.append('text').attr('font-size', 11).text(gbp(ticks[ticks.length - 1]));
+    const ml = probe.node().getComputedTextLength() + 10; probe.remove();
+    const x = d3.scaleBand(rows.map((r) => r.period), [ml, W - 4]).paddingInner(0.3).paddingOuter(0.1);
+    const xi = d3.scaleBand(['w', 'b'], [0, x.bandwidth()]).padding(0.08);
+    const bw = Math.min(xi.bandwidth(), 32);
+    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', ml).attr('x2', W - 4).attr('y1', (t) => y(t)).attr('y2', (t) => y(t)).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', ml - 6).attr('y', (t) => y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)').text((t) => gbp(t));
+    const narrow = W < 460;
+    svg.append('g').selectAll('text').data(rows).join('text').attr('x', (r) => x(r.period) + x.bandwidth() / 2).attr('y', H - 18).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)')
+      .text((r) => (narrow ? r.period.replace(' projected', ' proj.').replace(' to date', ' YTD') : r.period));
+    svg.append('g').selectAll('text').data(rows).join('text').attr('x', (r) => x(r.period) + x.bandwidth() / 2).attr('y', H - 4).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', 'var(--color-fg)')
+      .text((r) => (r.wtp == null ? '' : 'WTP ' + d3.format('.1%')(r.wtp)));
+    const g = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (r) => `translate(${x(r.period)},0)`);
+    [['written', 'w', c[0]], ['banked', 'b', c[1]]].forEach(([f, k, col]) => {
+      const proj = (r) => r.period.includes('projected');
+      g.append('rect').attr('x', xi(k) + (xi.bandwidth() - bw) / 2).attr('width', bw).attr('y', (r) => y(r[f])).attr('height', (r) => y(0) - y(r[f])).attr('rx', 2)
+        .attr('fill', (r) => (proj(r) ? 'none' : col)).attr('stroke', (r) => (proj(r) ? col : null)).attr('stroke-width', 1.5).attr('stroke-dasharray', (r) => (proj(r) ? '4 3' : null));
+    });
+    svg.append('line').attr('x1', ml).attr('x2', W - 4).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-axis)');
+    const tip = d3.select(el).append('div').attr('class', 'ss-tip').style('display', 'none');
+    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => x(r.period) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', 0).attr('height', H - 30).attr('fill', 'transparent')
+      .on('pointermove', (ev, r) => {
+        tip.style('display', null).replaceChildren();
+        tip.append('div').attr('class', 't').text(r.period);
+        const add = (col, n, v) => { const l = tip.append('div'); if (col) l.append('span').attr('class', 'sw').style('background', col); l.append('span').text(n + ': ' + v); };
+        add(c[0], 'Written', gbpFull(r.written));
+        add(c[1], 'Banked', gbpFull(r.banked));
+        if (r.wtp != null) add(null, 'WTP', d3.format('.1%')(r.wtp));
+        const [px, py] = d3.pointer(ev, el);
+        const tw = tip.node().offsetWidth;
+        tip.style('left', Math.max(0, Math.min(px + 12, el.clientWidth - tw)) + 'px').style('top', Math.max(0, py - 60) + 'px');
+      })
+      .on('pointerleave', () => tip.style('display', 'none'));
+  });
+
   // ---------- quarters ----------
   dash.draw('quarters', (tb) => {
     const d = dash.data('quarters');
