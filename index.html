@@ -234,7 +234,7 @@ window.dash = (() => {
       </table>
     </div>
     <h3 class="ss-sub">By year</h3>
-    <p class="note">Applications each year with attainment against that year's corporate target in brackets, counted only for years the adviser was on the team, except Raj, whose 2024–2025 corps from before he joined are included. 2024–2025 come from the Corporate Applications sheet; 2023 from the Targets tab. The last column compares 2026 to date with the same dates in 2025.</p>
+    <p class="note">Applications each year with attainment against that year's corporate target in brackets, counted only for years the adviser was on the team. 2024–2025 come from the Corporate Applications sheet; 2023 from the Targets tab. The last column compares 2026 to date with the same dates in 2025.</p>
     <div class="ss-tablewrap">
       <table class="ss-table" data-source="corp_years" data-row-key="adviser">
         <thead><tr>
@@ -376,7 +376,7 @@ window.dash = (() => {
       <dt>Targets</dt><dd>2026 written and banked targets from the Targets tab. Simran and Ramunas have written targets but no banked target.</dd>
       <dt>Last update</dt><dd><span data-draw="v" data-fmt="text" data-source="report_status" data-field="last_report" data-row="0">—</span></dd>
       <dt>Previous years</dt><dd>2023–2025 adviser figures from the WTP tab: Alex, Armani, Robin, Tatiana and Manny (2023); plus Martin (2024); Alex, Armani, Robin, Manny, Martin and Priti (2025). They add up exactly to the tab's team totals for each month.</dd>
-      <dt>Corporate applications</dt><dd>2026: monthly counts per adviser from the C&amp;E Apps 2026 tab. 2024–2025: each application in the Corporate Applications sheet of the Adviser Corps Input Sheet, by date. 2023: year-end outcomes on the Targets tab. Applications count only for years the adviser was on the team (from the written figures), except Raj, whose 2024–2025 applications from before he joined are included in his row and the team totals; targets come from the Targets tab, and the team target is the sum of those advisers' targets.</dd>
+      <dt>Corporate applications</dt><dd>2026: monthly counts per adviser from the C&amp;E Apps 2026 tab. 2024–2025: each application in the Corporate Applications sheet of the Adviser Corps Input Sheet, by date. 2023: year-end outcomes on the Targets tab. Applications count only for years the adviser was on the team (from the written figures); targets come from the Targets tab, and the team target is the sum of those advisers' targets.</dd>
       <dt>Left out</dt><dd>Martin's January 2026 figure (£293 written), which the WTP tab also keeps out of the team total.</dd>
     </dl>
   </details>
@@ -634,11 +634,11 @@ window.dash = (() => {
 
   dash.calc('corp_pivot', {
     title: 'Corporate applications by month',
-    description: 'Corporate applications per adviser per month for 2024–2026, counting only advisers on the team that year (plus Raj’s 2024–2025 applications from before he joined), with a team row per year.',
+    description: 'Corporate applications per adviser per month for 2024–2026, counting only advisers on the team that year, with a team row per year.',
     inputs: ['corp_apps_2026', 'corp_log', 'team_members'],
     fn: (corp_apps_2026, corp_log, team_members) => {
       const names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      const on = new Set([...team_members.map((m) => m.year + '|' + m.adviser), '2024|Raj', '2025|Raj']);
+      const on = new Set(team_members.map((m) => m.year + '|' + m.adviser));
       const recs = [
         ...corp_log.map((r) => ({ year: Number(r.date.slice(0, 4)), m: names[Number(r.date.slice(5, 7)) - 1], adviser: r.adviser, v: 1 })),
         ...corp_apps_2026.map((r) => ({ year: 2026, m: r.month_name, adviser: r.adviser, v: Number(r.apps || 0) })),
@@ -661,10 +661,10 @@ window.dash = (() => {
 
   dash.calc('corp_years', {
     title: 'Corporate applications by year',
-    description: 'Applications and attainment per adviser by year (2024–2025 from the Corporate Applications sheet, 2023 from the Targets tab), only for years on the team (plus Raj’s pre-team 2024–2025), with 2026 against the same dates in 2025.',
+    description: 'Applications and attainment per adviser by year (2024–2025 from the Corporate Applications sheet, 2023 from the Targets tab), only for years on the team, with 2026 against the same dates in 2025.',
     inputs: ['corp_history', 'corp_log', 'corp_ytd', 'team_members', 'report_status'],
     fn: (corp_history, corp_log, corp_ytd, team_members, report_status) => {
-      const on = new Set([...team_members.map((m) => m.year + '|' + m.adviser), '2024|Raj', '2025|Raj']);
+      const on = new Set(team_members.map((m) => m.year + '|' + m.adviser));
       const asOf = String(report_status[0].as_of);
       const same25 = '2025' + asOf.slice(4);
       const by = new Map();
