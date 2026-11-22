@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Superstars WTP 2026</title>
+
+<style>
+:root {
+  --font-anthropic-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-anthropic-serif: Georgia, "Times New Roman", serif;
+  --color-fg: #1f1e1d; --color-fg-muted: #6b6a66; --color-bg: #faf9f5; --color-panel: #ffffff;
+  --color-border-line: #e6e3da; --color-ok: #2e7d4f; --color-warn: #a36b00; --color-bad: #c0392b;
+  --cds-border: #e6e3da; --cds-surface-popover: #ffffff; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.12);
+  --cds-text-secondary: #6b6a66; --cds-chart-axis: #b8b5ac; --cds-chart-grid: #ece9e1; --cds-chart-muted: #c4c1b8;
+  --cds-chart-reference: #8a877f; --cds-chart-status-critical: #c0392b;
+  --cds-font-size-caption: 12px; --cds-font-size-body: 15px; --cds-font-size-heading: 16px; --cds-font-size-title: 30px;
+  --cds-font-weight-medium: 500; --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 16px; --cds-gap-lg: 24px; --cds-gap-xl: 32px;
+  --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 20px; --cds-radius: 8px; --cds-dur-slow: .3s;
+  --s1: #2f6fdf; --s2: #e07b39; --s3: #2e9e83; --s4: #9b59b6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-fg: #ecebe6; --color-fg-muted: #a3a19a; --color-bg: #1c1b19; --color-panel: #262523;
+    --color-border-line: #3a3935; --color-ok: #5cc28a; --color-bad: #ef7a6c;
+    --cds-border: #3a3935; --cds-surface-popover: #2e2d2a; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.5);
+    --cds-text-secondary: #a3a19a; --cds-chart-axis: #5a5853; --cds-chart-grid: #33322e; --cds-chart-muted: #5f5d57;
+    --cds-chart-reference: #9a978f; --cds-chart-status-critical: #ef7a6c;
+    --s1: #6b9bf2; --s2: #f0a068; --s3: #5cc2a6; --s4: #c08ad6;
+  }
+}
+html, body { margin: 0; background: var(--color-bg); color: var(--color-fg); }
+#dash-root { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; box-sizing: border-box; }
+.dash-select { font: inherit; font-size: 13px; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--color-border-line); background-color: var(--color-panel); color: var(--color-fg); }
+.ss-foot { font-size: 12px; color: var(--color-fg-muted); margin-top: 24px; }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+
+<script>
+window.dash = (() => {
+  const raw = {"written_2026":[{"adviser":"Alex","month":1,"month_name":"Jan","written":29162,"banked":16370,"status":"Month end"},{"adviser":"Alex","month":2,"month_name":"Feb","written":40208,"banked":6777,"status":"Month end"},{"adviser":"Alex","month":3,"month_name":"Mar","written":109466,"banked":16481.21,"status":"Month end"},{"adviser":"Alex","month":4,"month_name":"Apr","written":57108,"banked":10718,"status":"Month end"},{"adviser":"Alex","month":5,"month_name":"May","written":22557,"banked":23477,"status":"Month end"},{"adviser":"Alex","month":6,"month_name":"Jun","written":29559,"banked":35736,"status":"Month end"},{"adviser":"Alex","month":7,"month_name":"Jul","written":51378,"banked":11678.28,"status":"Month end"},{"adviser":"Alex","month":8,"month_name":"Aug","written":19557,"banked":26115,"status":"Month end"},{"adviser":"Alex","month":9,"month_name":"Sep","written":36215,"banked":11080.21,"status":"Month end"},{"adviser":"Alex","month":10,"month_name":"Oct","written":47396,"banked":18439.16,"status":"Month end"},{"adviser":"Alex","month":11,"month_name":"Nov","written":18866,"banked":13687,"status":"Month to date"},{"adviser":"Armani","month":1,"month_name":"Jan","written":14574,"banked":3237.45,"status":"Month end"},{"adviser":"Armani","month":2,"month_name":"Feb","written":27265,"banked":6536.81,"status":"Month end"},{"adviser":"Armani","month":3,"month_name":"Mar","written":40396,"banked":3097.78,"status":"Month end"},{"adviser":"Armani","month":4,"month_name":"Apr","written":14177,"banked":7403.79,"status":"Month end"},{"adviser":"Armani","month":5,"month_name":"May","written":13715,"banked":1908.34,"status":"Month end"},{"adviser":"Armani","month":6,"month_name":"Jun","written":12685,"banked":6713.07,"status":"Month end"},{"adviser":"Armani","month":7,"month_name":"Jul","written":30064,"banked":6993.6,"status":"Month end"},{"adviser":"Armani","month":8,"month_name":"Aug","written":11735,"banked":9661,"status":"Month end"},{"adviser":"Armani","month":9,"month_name":"Sep","written":17753,"banked":3009.14,"status":"Month end"},{"adviser":"Armani","month":10,"month_name":"Oct","written":24052,"banked":3186.58,"status":"Month end"},{"adviser":"Armani","month":11,"month_name":"Nov","written":8823,"banked":8852.99,"status":"Month to date"},{"adviser":"Priti","month":1,"month_name":"Jan","written":7136,"banked":1386.5,"status":"Month end"},{"adviser":"Priti","month":2,"month_name":"Feb","written":7728,"banked":596.97,"status":"Month end"},{"adviser":"Priti","month":3,"month_name":"Mar","written":18412,"banked":4672.97,"status":"Month end"},{"adviser":"Priti","month":4,"month_name":"Apr","written":3009,"banked":2546.23,"status":"Month end"},{"adviser":"Priti","month":5,"month_name":"May","written":8301,"banked":0,"status":"Month end"},{"adviser":"Priti","month":6,"month_name":"Jun","written":2845,"banked":1589.46,"status":"Month end"},{"adviser":"Priti","month":7,"month_name":"Jul","written":6750,"banked":6050.68,"status":"Month end"},{"adviser":"Priti","month":8,"month_name":"Aug","written":15237,"banked":4236,"status":"Month end"},{"adviser":"Priti","month":9,"month_name":"Sep","written":12138,"banked":957.53,"status":"Month end"},{"adviser":"Priti","month":10,"month_name":"Oct","written":6012,"banked":2198.93,"status":"Month end"},{"adviser":"Priti","month":11,"month_name":"Nov","written":5484,"banked":1907.2,"status":"Month to date"},{"adviser":"Raj","month":1,"month_name":"Jan","written":0,"banked":7496,"status":"Month end"},{"adviser":"Raj","month":2,"month_name":"Feb","written":0,"banked":6869,"status":"Month end"},{"adviser":"Raj","month":3,"month_name":"Mar","written":47939,"banked":6244,"status":"Month end"},{"adviser":"Raj","month":4,"month_name":"Apr","written":42387,"banked":6830,"status":"Month end"},{"adviser":"Raj","month":5,"month_name":"May","written":19622,"banked":10790,"status":"Month end"},{"adviser":"Raj","month":6,"month_name":"Jun","written":22917,"banked":12410,"status":"Month end"},{"adviser":"Raj","month":7,"month_name":"Jul","written":35846,"banked":3238.64,"status":"Month end"},{"adviser":"Raj","month":8,"month_name":"Aug","written":14279,"banked":15046,"status":"Month end"},{"adviser":"Raj","month":9,"month_name":"Sep","written":33185,"banked":5710.62,"status":"Month end"},{"adviser":"Raj","month":10,"month_name":"Oct","written":37638,"banked":5607.09,"status":"Month end"},{"adviser":"Raj","month":11,"month_name":"Nov","written":15392,"banked":8002.73,"status":"Month to date"},{"adviser":"Shahida","month":8,"month_name":"Aug","written":2431,"banked":0,"status":"Month end"},{"adviser":"Shahida","month":9,"month_name":"Sep","written":4575,"banked":0,"status":"Month end"},{"adviser":"Shahida","month":10,"month_name":"Oct","written":10471,"banked":0,"status":"Month end"},{"adviser":"Shahida","month":11,"month_name":"Nov","written":1419,"banked":340.99,"status":"Month to date"},{"adviser":"Simran","month":9,"month_name":"Sep","written":1068,"banked":0,"status":"Month end"},{"adviser":"Simran","month":10,"month_name":"Oct","written":1224,"banked":0,"status":"Month end"},{"adviser":"Simran","month":11,"month_name":"Nov","written":896,"banked":0,"status":"Month to date"},{"adviser":"Ramunas","month":9,"month_name":"Sep","written":0,"banked":0,"status":"Month end"},{"adviser":"Ramunas","month":10,"month_name":"Oct","written":1702,"banked":0,"status":"Month end"},{"adviser":"Ramunas","month":11,"month_name":"Nov","written":1716,"banked":0,"status":"Month to date"}],"adviser_history":[{"year":2023,"month":1,"month_name":"Jan","adviser":"Alex","written":29229,"banked":6268.72},{"year":2023,"month":2,"month_name":"Feb","adviser":"Alex","written":42775,"banked":9968.73},{"year":2023,"month":3,"month_name":"Mar","adviser":"Alex","written":49904,"banked":15456.4},{"year":2023,"month":4,"month_name":"Apr","adviser":"Alex","written":33754,"banked":23428.43},{"year":2023,"month":5,"month_name":"May","adviser":"Alex","written":60219,"banked":13324.77},{"year":2023,"month":6,"month_name":"Jun","adviser":"Alex","written":46312,"banked":6267.03},{"year":2023,"month":7,"month_name":"Jul","adviser":"Alex","written":22170,"banked":11331.76},{"year":2023,"month":8,"month_name":"Aug","adviser":"Alex","written":34086,"banked":23087.83},{"year":2023,"month":9,"month_name":"Sep","adviser":"Alex","written":42776,"banked":17253.95},{"year":2023,"month":10,"month_name":"Oct","adviser":"Alex","written":17839,"banked":9525.67},{"year":2023,"month":11,"month_name":"Nov","adviser":"Alex","written":25284,"banked":18976.7},{"year":2023,"month":12,"month_name":"Dec","adviser":"Alex","written":13437,"banked":5465.82},{"year":2023,"month":1,"month_name":"Jan","adviser":"Armani","written":18752,"banked":1099.86},{"year":2023,"month":2,"month_name":"Feb","adviser":"Armani","written":11278,"banked":4098.95},{"year":2023,"month":3,"month_name":"Mar","adviser":"Armani","written":18847,"banked":1479.52},{"year":2023,"month":4,"month_name":"Apr","adviser":"Armani","written":12278,"banked":4140.98},{"year":2023,"month":5,"month_name":"May","adviser":"Armani","written":8328,"banked":1866.33},{"year":2023,"month":6,"month_name":"Jun","adviser":"Armani","written":22096,"banked":3076.25},{"year":2023,"month":7,"month_name":"Jul","adviser":"Armani","written":11859,"banked":4296.96},{"year":2023,"month":8,"month_name":"Aug","adviser":"Armani","written":11491,"banked":7621.88},{"year":2023,"month":9,"month_name":"Sep","adviser":"Armani","written":12554,"banked":2730.38},{"year":2023,"month":10,"month_name":"Oct","adviser":"Armani","written":11908,"banked":3458.04},{"year":2023,"month":11,"month_name":"Nov","adviser":"Armani","written":13132,"banked":4448.07},{"year":2023,"month":12,"month_name":"Dec","adviser":"Armani","written":5514,"banked":2201.81},{"year":2023,"month":1,"month_name":"Jan","adviser":"Robin","written":4844,"banked":4890.23},{"year":2023,"month":2,"month_name":"Feb","adviser":"Robin","written":0,"banked":4171.46},{"year":2023,"month":3,"month_name":"Mar","adviser":"Robin","written":20244,"banked":4722.7},{"year":2023,"month":4,"month_name":"Apr","adviser":"Robin","written":12939,"banked":437.09},{"year":2023,"month":5,"month_name":"May","adviser":"Robin","written":10205,"banked":2708},{"year":2023,"month":6,"month_name":"Jun","adviser":"Robin","written":19216,"banked":602.87},{"year":2023,"month":7,"month_name":"Jul","adviser":"Robin","written":7399,"banked":564.7},{"year":2023,"month":8,"month_name":"Aug","adviser":"Robin","written":8816,"banked":2797.41},{"year":2023,"month":9,"month_name":"Sep","adviser":"Robin","written":17846,"banked":6517.2},{"year":2023,"month":10,"month_name":"Oct","adviser":"Robin","written":8409,"banked":1774.41},{"year":2023,"month":11,"month_name":"Nov","adviser":"Robin","written":12694,"banked":2295.48},{"year":2023,"month":12,"month_name":"Dec","adviser":"Robin","written":106,"banked":2471.13},{"year":2023,"month":1,"month_name":"Jan","adviser":"Tatiana","written":0,"banked":0},{"year":2023,"month":2,"month_name":"Feb","adviser":"Tatiana","written":0,"banked":0},{"year":2023,"month":3,"month_name":"Mar","adviser":"Tatiana","written":0,"banked":0},{"year":2023,"month":4,"month_name":"Apr","adviser":"Tatiana","written":1070,"banked":0},{"year":2023,"month":5,"month_name":"May","adviser":"Tatiana","written":1800,"banked":0},{"year":2023,"month":6,"month_name":"Jun","adviser":"Tatiana","written":9868,"banked":0},{"year":2023,"month":7,"month_name":"Jul","adviser":"Tatiana","written":3697,"banked":0},{"year":2023,"month":8,"month_name":"Aug","adviser":"Tatiana","written":3734,"banked":0},{"year":2023,"month":9,"month_name":"Sep","adviser":"Tatiana","written":2357,"banked":0},{"year":2023,"month":10,"month_name":"Oct","adviser":"Tatiana","written":3945,"banked":953.25},{"year":2023,"month":11,"month_name":"Nov","adviser":"Tatiana","written":8260,"banked":1003.12},{"year":2023,"month":12,"month_name":"Dec","adviser":"Tatiana","written":6442,"banked":0},{"year":2023,"month":1,"month_name":"Jan","adviser":"Manny","written":0,"banked":0},{"year":2023,"month":2,"month_name":"Feb","adviser":"Manny","written":0,"banked":0},{"year":2023,"month":3,"month_name":"Mar","adviser":"Manny","written":0,"banked":0},{"year":2023,"month":4,"month_name":"Apr","adviser":"Manny","written":0,"banked":0},{"year":2023,"month":5,"month_name":"May","adviser":"Manny","written":0,"banked":0},{"year":2023,"month":6,"month_name":"Jun","adviser":"Manny","written":879,"banked":0},{"year":2023,"month":7,"month_name":"Jul","adviser":"Manny","written":8194,"banked":0},{"year":2023,"month":8,"month_name":"Aug","adviser":"Manny","written":9364,"banked":0},{"year":2023,"month":9,"month_name":"Sep","adviser":"Manny","written":7339,"banked":0},{"year":2023,"month":10,"month_name":"Oct","adviser":"Manny","written":13194,"banked":1883.43},{"year":2023,"month":11,"month_name":"Nov","adviser":"Manny","written":14771,"banked":2138.01},{"year":2023,"month":12,"month_name":"Dec","adviser":"Manny","written":1922,"banked":2742.6},{"year":2024,"month":1,"month_name":"Jan","adviser":"Alex","written":32016,"banked":8527.92},{"year":2024,"month":2,"month_name":"Feb","adviser":"Alex","written":49370,"banked":10036.55},{"year":2024,"month":3,"month_name":"Mar","adviser":"Alex","written":30160,"banked":18757.75},{"year":2024,"month":4,"month_name":"Apr","adviser":"Alex","written":29616,"banked":10217.59},{"year":2024,"month":5,"month_name":"May","adviser":"Alex","written":33287,"banked":12842.99},{"year":2024,"month":6,"month_name":"Jun","adviser":"Alex","written":36810,"banked":16683.7},{"year":2024,"month":7,"month_name":"Jul","adviser":"Alex","written":41159,"banked":15844},{"year":2024,"month":8,"month_name":"Aug","adviser":"Alex","written":23382,"banked":15430},{"year":2024,"month":9,"month_name":"Sep","adviser":"Alex","written":22813,"banked":16414},{"year":2024,"month":10,"month_name":"Oct","adviser":"Alex","written":32812,"banked":10756},{"year":2024,"month":11,"month_name":"Nov","adviser":"Alex","written":35377,"banked":13635.82},{"year":2024,"month":12,"month_name":"Dec","adviser":"Alex","written":10917,"banked":15720},{"year":2024,"month":1,"month_name":"Jan","adviser":"Armani","written":24900,"banked":3298.83},{"year":2024,"month":2,"month_name":"Feb","adviser":"Armani","written":22455,"banked":3746.74},{"year":2024,"month":3,"month_name":"Mar","adviser":"Armani","written":22620,"banked":3422.71},{"year":2024,"month":4,"month_name":"Apr","adviser":"Armani","written":17064,"banked":1797.61},{"year":2024,"month":5,"month_name":"May","adviser":"Armani","written":15073,"banked":6246.46},{"year":2024,"month":6,"month_name":"Jun","adviser":"Armani","written":16685,"banked":4304.11},{"year":2024,"month":7,"month_name":"Jul","adviser":"Armani","written":16588,"banked":3927},{"year":2024,"month":8,"month_name":"Aug","adviser":"Armani","written":9965,"banked":4893},{"year":2024,"month":9,"month_name":"Sep","adviser":"Armani","written":14378,"banked":3853.91},{"year":2024,"month":10,"month_name":"Oct","adviser":"Armani","written":14178,"banked":3844.96},{"year":2024,"month":11,"month_name":"Nov","adviser":"Armani","written":10017,"banked":2650.66},{"year":2024,"month":12,"month_name":"Dec","adviser":"Armani","written":1046,"banked":7036.93},{"year":2024,"month":1,"month_name":"Jan","adviser":"Robin","written":18333,"banked":2023.46},{"year":2024,"month":2,"month_name":"Feb","adviser":"Robin","written":24568,"banked":2190.17},{"year":2024,"month":3,"month_name":"Mar","adviser":"Robin","written":13388,"banked":3771.42},{"year":2024,"month":4,"month_name":"Apr","adviser":"Robin","written":17418,"banked":4913.82},{"year":2024,"month":5,"month_name":"May","adviser":"Robin","written":25028,"banked":5638.76},{"year":2024,"month":6,"month_name":"Jun","adviser":"Robin","written":13413,"banked":709.62},{"year":2024,"month":7,"month_name":"Jul","adviser":"Robin","written":8367,"banked":3109},{"year":2024,"month":8,"month_name":"Aug","adviser":"Robin","written":12901,"banked":5352},{"year":2024,"month":9,"month_name":"Sep","adviser":"Robin","written":20997,"banked":3477},{"year":2024,"month":10,"month_name":"Oct","adviser":"Robin","written":11463,"banked":4289.77},{"year":2024,"month":11,"month_name":"Nov","adviser":"Robin","written":2596,"banked":3845.88},{"year":2024,"month":12,"month_name":"Dec","adviser":"Robin","written":13891,"banked":5262.79},{"year":2024,"month":1,"month_name":"Jan","adviser":"Tatiana","written":4281,"banked":2851.11},{"year":2024,"month":2,"month_name":"Feb","adviser":"Tatiana","written":1286,"banked":848.91},{"year":2024,"month":3,"month_name":"Mar","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":4,"month_name":"Apr","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":5,"month_name":"May","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":6,"month_name":"Jun","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":7,"month_name":"Jul","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":8,"month_name":"Aug","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":9,"month_name":"Sep","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":10,"month_name":"Oct","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":11,"month_name":"Nov","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":12,"month_name":"Dec","adviser":"Tatiana","written":0,"banked":0},{"year":2024,"month":1,"month_name":"Jan","adviser":"Manny","written":21642,"banked":1191.31},{"year":2024,"month":2,"month_name":"Feb","adviser":"Manny","written":24326,"banked":1777.1},{"year":2024,"month":3,"month_name":"Mar","adviser":"Manny","written":15354,"banked":6118.23},{"year":2024,"month":4,"month_name":"Apr","adviser":"Manny","written":20251,"banked":3257.86},{"year":2024,"month":5,"month_name":"May","adviser":"Manny","written":20115,"banked":4582.75},{"year":2024,"month":6,"month_name":"Jun","adviser":"Manny","written":18069,"banked":2352.6},{"year":2024,"month":7,"month_name":"Jul","adviser":"Manny","written":25105,"banked":2769.65},{"year":2024,"month":8,"month_name":"Aug","adviser":"Manny","written":28478,"banked":6120.61},{"year":2024,"month":9,"month_name":"Sep","adviser":"Manny","written":23955,"banked":4549.72},{"year":2024,"month":10,"month_name":"Oct","adviser":"Manny","written":24212,"banked":6304.67},{"year":2024,"month":11,"month_name":"Nov","adviser":"Manny","written":25581,"banked":6131.86},{"year":2024,"month":12,"month_name":"Dec","adviser":"Manny","written":19259,"banked":8818.2},{"year":2024,"month":1,"month_name":"Jan","adviser":"Martin","written":0,"banked":0},{"year":2024,"month":2,"month_name":"Feb","adviser":"Martin","written":0,"banked":0},{"year":2024,"month":3,"month_name":"Mar","adviser":"Martin","written":0,"banked":0},{"year":2024,"month":4,"month_name":"Apr","adviser":"Martin","written":0,"banked":0},{"year":2024,"month":5,"month_name":"May","adviser":"Martin","written":0,"banked":0},{"year":2024,"month":6,"month_name":"Jun","adviser":"Martin","written":3891,"banked":0},{"year":2024,"month":7,"month_name":"Jul","adviser":"Martin","written":1436,"banked":0},{"year":2024,"month":8,"month_name":"Aug","adviser":"Martin","written":11202,"banked":0},{"year":2024,"month":9,"month_name":"Sep","adviser":"Martin","written":10546,"banked":0},{"year":2024,"month":10,"month_name":"Oct","adviser":"Martin","written":19324,"banked":693.12},{"year":2024,"month":11,"month_name":"Nov","adviser":"Martin","written":11167,"banked":126.71},{"year":2024,"month":12,"month_name":"Dec","adviser":"Martin","written":9565,"banked":2096.54},{"year":2025,"month":1,"month_name":"Jan","adviser":"Alex","written":26351,"banked":12613},{"year":2025,"month":2,"month_name":"Feb","adviser":"Alex","written":65397,"banked":15831},{"year":2025,"month":3,"month_name":"Mar","adviser":"Alex","written":33111,"banked":7123},{"year":2025,"month":4,"month_name":"Apr","adviser":"Alex","written":31436,"banked":19616},{"year":2025,"month":5,"month_name":"May","adviser":"Alex","written":42442,"banked":20651},{"year":2025,"month":6,"month_name":"Jun","adviser":"Alex","written":40479,"banked":15904},{"year":2025,"month":7,"month_name":"Jul","adviser":"Alex","written":57167,"banked":6543},{"year":2025,"month":8,"month_name":"Aug","adviser":"Alex","written":31278,"banked":18071},{"year":2025,"month":9,"month_name":"Sep","adviser":"Alex","written":45188,"banked":17413},{"year":2025,"month":10,"month_name":"Oct","adviser":"Alex","written":26926,"banked":11185},{"year":2025,"month":11,"month_name":"Nov","adviser":"Alex","written":28292,"banked":10760},{"year":2025,"month":12,"month_name":"Dec","adviser":"Alex","written":16252,"banked":21970},{"year":2025,"month":1,"month_name":"Jan","adviser":"Armani","written":18794,"banked":5247.96},{"year":2025,"month":2,"month_name":"Feb","adviser":"Armani","written":15144,"banked":2026.4},{"year":2025,"month":3,"month_name":"Mar","adviser":"Armani","written":18714,"banked":2677.29},{"year":2025,"month":4,"month_name":"Apr","adviser":"Armani","written":22771,"banked":2378.49},{"year":2025,"month":5,"month_name":"May","adviser":"Armani","written":20345,"banked":3849},{"year":2025,"month":6,"month_name":"Jun","adviser":"Armani","written":15211,"banked":1450.21},{"year":2025,"month":7,"month_name":"Jul","adviser":"Armani","written":14262,"banked":3699},{"year":2025,"month":8,"month_name":"Aug","adviser":"Armani","written":19994,"banked":7137},{"year":2025,"month":9,"month_name":"Sep","adviser":"Armani","written":25350,"banked":9959},{"year":2025,"month":10,"month_name":"Oct","adviser":"Armani","written":21311,"banked":1923.64},{"year":2025,"month":11,"month_name":"Nov","adviser":"Armani","written":12123,"banked":6013.96},{"year":2025,"month":12,"month_name":"Dec","adviser":"Armani","written":9347,"banked":4602.09},{"year":2025,"month":1,"month_name":"Jan","adviser":"Robin","written":17669,"banked":877.07},{"year":2025,"month":2,"month_name":"Feb","adviser":"Robin","written":12874,"banked":4573.48},{"year":2025,"month":3,"month_name":"Mar","adviser":"Robin","written":1161,"banked":2694},{"year":2025,"month":4,"month_name":"Apr","adviser":"Robin","written":0,"banked":3492.35},{"year":2025,"month":1,"month_name":"Jan","adviser":"Manny","written":40684,"banked":3784.19},{"year":2025,"month":2,"month_name":"Feb","adviser":"Manny","written":27003,"banked":2512.66},{"year":2025,"month":3,"month_name":"Mar","adviser":"Manny","written":33733,"banked":3590.4},{"year":2025,"month":4,"month_name":"Apr","adviser":"Manny","written":30670,"banked":11459.41},{"year":2025,"month":5,"month_name":"May","adviser":"Manny","written":32015,"banked":9527},{"year":2025,"month":6,"month_name":"Jun","adviser":"Manny","written":31914,"banked":9154.13},{"year":2025,"month":7,"month_name":"Jul","adviser":"Manny","written":37582,"banked":10602},{"year":2025,"month":8,"month_name":"Aug","adviser":"Manny","written":30809,"banked":10164},{"year":2025,"month":9,"month_name":"Sep","adviser":"Manny","written":31923,"banked":10769},{"year":2025,"month":10,"month_name":"Oct","adviser":"Manny","written":37945,"banked":10470.96},{"year":2025,"month":11,"month_name":"Nov","adviser":"Manny","written":44246,"banked":8911.85},{"year":2025,"month":12,"month_name":"Dec","adviser":"Manny","written":13893,"banked":11494.45},{"year":2025,"month":1,"month_name":"Jan","adviser":"Martin","written":17548,"banked":1160.2},{"year":2025,"month":2,"month_name":"Feb","adviser":"Martin","written":18761,"banked":2251.61},{"year":2025,"month":3,"month_name":"Mar","adviser":"Martin","written":8664,"banked":1509.23},{"year":2025,"month":4,"month_name":"Apr","adviser":"Martin","written":22517,"banked":3929.73},{"year":2025,"month":5,"month_name":"May","adviser":"Martin","written":15043,"banked":3578},{"year":2025,"month":6,"month_name":"Jun","adviser":"Martin","written":13413,"banked":1449.52},{"year":2025,"month":7,"month_name":"Jul","adviser":"Martin","written":10437,"banked":3526},{"year":2025,"month":8,"month_name":"Aug","adviser":"Martin","written":8675,"banked":5495},{"year":2025,"month":9,"month_name":"Sep","adviser":"Martin","written":15007,"banked":2041},{"year":2025,"month":10,"month_name":"Oct","adviser":"Martin","written":13861,"banked":4030.96},{"year":2025,"month":11,"month_name":"Nov","adviser":"Martin","written":11762,"banked":4951.88},{"year":2025,"month":12,"month_name":"Dec","adviser":"Martin","written":8966,"banked":1869.27},{"year":2025,"month":4,"month_name":"Apr","adviser":"Priti","written":0,"banked":0},{"year":2025,"month":5,"month_name":"May","adviser":"Priti","written":2187,"banked":0},{"year":2025,"month":6,"month_name":"Jun","adviser":"Priti","written":8091,"banked":500},{"year":2025,"month":7,"month_name":"Jul","adviser":"Priti","written":9463,"banked":25},{"year":2025,"month":8,"month_name":"Aug","adviser":"Priti","written":4852,"banked":0},{"year":2025,"month":9,"month_name":"Sep","adviser":"Priti","written":4251,"banked":159},{"year":2025,"month":10,"month_name":"Oct","adviser":"Priti","written":16107,"banked":804.56},{"year":2025,"month":11,"month_name":"Nov","adviser":"Priti","written":11232,"banked":733.82},{"year":2025,"month":12,"month_name":"Dec","adviser":"Priti","written":5502,"banked":2949.96}],"targets_2026":[{"adviser":"Alex","written_target":550000,"banked_target":200000},{"adviser":"Armani","written_target":300000,"banked_target":90000},{"adviser":"Raj","written_target":300000,"banked_target":100000},{"adviser":"Priti","written_target":150000,"banked_target":50000},{"adviser":"Shahida","written_target":70000,"banked_target":5000},{"adviser":"Simran","written_target":25000,"banked_target":0},{"adviser":"Ramunas","written_target":25000,"banked_target":0}],"report_status":[{"as_of":"2026-11-19","latest_month":11,"latest_month_final":false,"last_report":"Team Stats 5.xlsx, WTP tab: Jan\u2013Oct 2026 month end; November to date from the Total Written Report 1\u201319 Nov 26 and adviser statements (November 2026 Payable), uploaded 19 Nov 2026"}]};
+  const calcs = {}, memo = {}, draws = {}, listeners = [];
+  let params = {};
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const get = (id) => {
+    if (id in raw) return raw[id];
+    if (id in memo) return memo[id];
+    const c = calcs[id];
+    if (!c) return undefined;
+    return (memo[id] = c.fn(...c.inputs.map(get)));
+  };
+  const runAll = () => {
+    listeners.forEach((f) => f());
+    for (const [name, fn] of Object.entries(draws))
+      document.querySelectorAll(`[data-draw="${name}"]`).forEach((el) => { try { fn(el); } catch (e) { console.error(name, e); } });
+  };
+  const api = {
+    get colors() { return [css('--s1'), css('--s2'), css('--s3'), css('--s4')]; },
+    data: (id) => { const d = get(id); return d === undefined ? { status: 'missing', data: [] } : { status: 'ok', data: d, columns: d[0] ? Object.keys(d[0]) : [] }; },
+    calc: (id, c) => { calcs[id] = c; },
+    loader: () => {},
+    draw: (name, fn) => { draws[name] = fn; },
+    onData: (fn) => { listeners.push(fn); },
+    params: () => ({ ...params }),
+    setParams: (p) => { params = { ...params, ...p }; runAll(); },
+    resetParams: () => { params = {}; runAll(); },
+    setLink: (n) => { history.replaceState(null, '', '#' + n); },
+    refresh: () => {},
+  };
+  document.addEventListener('DOMContentLoaded', runAll);
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(runAll, 150); });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', runAll);
+  return api;
+})();
+</script>
+
+</head>
+<body>
+<div id="dash-root">
+
+<style>
+  .ss { font-family: var(--font-anthropic-sans); color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+  .ss-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0 0 var(--cds-gap-xs); }
+  .ss-take { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); max-width: 60rem; line-height: 1.5; }
+  .ss-take b { color: var(--color-fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ss-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: var(--cds-gap-md); }
+  .ss-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+  .ss-tile .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .ss-tile .big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: var(--cds-gap-xs) 0; font-variant-numeric: tabular-nums; }
+  .ss-tile .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .ss-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr)); gap: var(--cds-gap-md); }
+  .ss-cardhead { display: flex; justify-content: space-between; align-items: center; gap: var(--cds-gap-md); flex-wrap: wrap; }
+  .ss-year { min-width: 6.5rem; }
+  .ss-table tr.former td:first-child { color: var(--color-fg-muted); }
+  .ss-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0 0 var(--cds-gap-xs); }
+  .ss-card .note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-md); }
+  .ss-chart { position: relative; min-height: 280px; }
+  .ss-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; z-index: 2; font-variant-numeric: tabular-nums; }
+  .ss-tip .t { color: var(--cds-text-secondary); margin-bottom: 2px; }
+  .ss-tip .sw { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; }
+  .ss-legend { display: flex; gap: var(--cds-gap-md); flex-wrap: wrap; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-bottom: var(--cds-gap-sm); }
+  .ss-legend span i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+  .ss-tablewrap { overflow-x: auto; }
+  .ss-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .ss-table th { text-align: right; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .ss-table td { text-align: right; padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+  .ss-table th:first-child, .ss-table td:first-child { text-align: left; }
+  .ss-table tr.total td { font-weight: 600; }
+  .ss-att { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+  .ss-att .bar { width: 56px; height: 6px; border-radius: 3px; background: var(--cds-chart-grid); position: relative; overflow: hidden; }
+  .ss-att .bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; }
+  .ss-heat td.h { border-radius: 4px; }
+  .ss-good { color: var(--color-ok); }
+  .ss-bad { color: var(--color-bad); }
+  .ss details { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .ss details summary { cursor: pointer; color: var(--color-fg); }
+  .ss details dl { display: grid; grid-template-columns: max-content 1fr; gap: var(--cds-gap-xs) var(--cds-gap-md); margin: var(--cds-gap-sm) 0 0; }
+  .ss details dt { color: var(--color-fg); }
+  .ss details dd { margin: 0; }
+  [data-dash-source-state=empty] { color: transparent; }
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="ss">
+  <header class="ss-head" id="top">
+    <h1>Superstars written &amp; WTP 2026</h1>
+    <p class="ss-take">To <b data-draw="v" data-fmt="date" data-source="report_status" data-field="as_of" data-row="0">—</b> the Superstars have written <b data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="written" data-row="0">—</b> and banked <b data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="banked" data-row="0">—</b>, a WTP of <b data-draw="v" data-fmt="pct" data-source="team_ytd" data-field="wtp" data-row="0">—</b>. At this pace the team writes <b data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="proj_written" data-row="0">—</b> by year end, <b data-draw="v" data-fmt="pct0" data-source="team_ytd" data-field="written_att" data-row="0">—</b> of the <b data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="written_target" data-row="0">—</b> written target.</p>
+  </header>
+
+  <section class="ss-tiles" id="headline">
+    <div class="ss-card ss-tile">
+      <div class="lab">Written, year to date</div>
+      <div class="big" data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="written" data-row="0">—</div>
+      <div class="sub"><span data-draw="v" data-fmt="signed" data-source="team_ytd" data-field="vs_2025" data-row="0">—</span> vs same months 2025</div>
+    </div>
+    <div class="ss-card ss-tile">
+      <div class="lab">Banked, year to date</div>
+      <div class="big" data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="banked" data-row="0">—</div>
+      <div class="sub">On pace for <span data-draw="v" data-fmt="pct0" data-source="team_ytd" data-field="banked_att" data-row="0">—</span> of banked target</div>
+    </div>
+    <div class="ss-card ss-tile">
+      <div class="lab">WTP, year to date</div>
+      <div class="big" data-draw="v" data-fmt="pct" data-source="team_ytd" data-field="wtp" data-row="0">—</div>
+      <div class="sub">Banked as a share of written</div>
+    </div>
+    <div class="ss-card ss-tile">
+      <div class="lab">Projected written, year end</div>
+      <div class="big" data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="proj_written" data-row="0">—</div>
+      <div class="sub"><span data-draw="v" data-fmt="pct0" data-source="team_ytd" data-field="written_att" data-row="0">—</span> of <span data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="written_target" data-row="0">—</span> target</div>
+    </div>
+    <div class="ss-card ss-tile">
+      <div class="lab">Latest month written · <span data-draw="v" data-fmt="text" data-source="team_ytd" data-field="latest_label" data-row="0">—</span></div>
+      <div class="big" data-draw="v" data-fmt="gbp" data-source="team_ytd" data-field="latest_written" data-row="0">—</div>
+      <div class="sub"><span data-draw="v" data-fmt="signed" data-source="team_ytd" data-field="vs_prior" data-row="0">—</span> vs prior month, like for like</div>
+    </div>
+  </section>
+
+  <section class="ss-card" id="monthly">
+    <h2>Written and banked by month, 2026</h2>
+    <p class="note">Team totals each month; the dashed line is the 2025 team's written for the same month.</p>
+    <div class="ss-chart" data-draw="monthly" data-source="monthly_2026"></div>
+  </section>
+
+  <section class="ss-card" id="scorecard">
+    <h2>Adviser scorecard</h2>
+    <p class="note">Year to date, with a straight-line year-end projection from each adviser's first month against their 2026 targets.</p>
+    <div class="ss-tablewrap">
+      <table class="ss-table" data-source="adviser_ytd" data-row-key="adviser">
+        <thead><tr>
+          <th data-field="adviser">Adviser</th>
+          <th data-field="written">Written</th>
+          <th data-field="banked">Banked</th>
+          <th data-field="wtp">WTP</th>
+          <th data-field="proj_written">Proj. written</th>
+          <th data-field="written_target">Written target</th>
+          <th data-field="written_att">Attainment</th>
+          <th data-field="proj_banked">Proj. banked</th>
+          <th data-field="banked_target">Banked target</th>
+          <th data-field="banked_att">Attainment</th>
+        </tr></thead>
+        <tbody data-draw="scorecard"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ss-card" id="by-month">
+    <div class="ss-cardhead">
+      <h2>Written by adviser and month</h2>
+      <select class="dash-select ss-year" data-draw="yearsel" data-source="pivot" aria-label="Year"></select>
+    </div>
+    <p class="note">Darker cells are bigger months for that year. Blank means no figure reported.</p>
+    <div class="ss-tablewrap">
+      <table class="ss-table ss-heat" data-source="pivot" data-row-key="year,adviser">
+        <thead><tr>
+          <th data-field="adviser">Adviser</th>
+          <th data-field="Jan">Jan</th><th data-field="Feb">Feb</th><th data-field="Mar">Mar</th><th data-field="Apr">Apr</th>
+          <th data-field="May">May</th><th data-field="Jun">Jun</th><th data-field="Jul">Jul</th><th data-field="Aug">Aug</th>
+          <th data-field="Sep">Sep</th><th data-field="Oct">Oct</th><th data-field="Nov">Nov</th><th data-field="Dec">Dec</th>
+          <th data-field="total">Total</th>
+        </tr></thead>
+        <tbody data-draw="pivot"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ss-card" id="years">
+    <h2>Year on year</h2>
+    <p class="note">Team totals each year as the team stood then. Growth is on the year before; for 2026 to date it is on the same period of 2025, with a part month counted pro rata.</p>
+    <div class="ss-tablewrap">
+      <table class="ss-table" data-source="years" data-row-key="period">
+        <thead><tr>
+          <th data-field="period">Year</th>
+          <th data-field="written">Written</th>
+          <th data-field="banked">Banked</th>
+          <th data-field="wtp">WTP</th>
+          <th data-field="growth">Written growth</th>
+        </tr></thead>
+        <tbody data-draw="years"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ss-card" id="adviser-years">
+    <h2>Advisers by year</h2>
+    <p class="note">Written and WTP for everyone who has been on the team since 2023. Current advisers first; blank means not on the team that year.</p>
+    <div class="ss-tablewrap">
+      <table class="ss-table" data-source="adviser_years" data-row-key="adviser">
+        <thead><tr>
+          <th data-field="adviser">Adviser</th>
+          <th data-field="written_2023">Written 2023</th>
+          <th data-field="written_2024">Written 2024</th>
+          <th data-field="written_2025">Written 2025</th>
+          <th data-field="written_2026">Written 2026 to date</th>
+          <th data-field="proj_2026">2026 projected</th>
+          <th data-field="wtp_2023">WTP 2023</th>
+          <th data-field="wtp_2024">WTP 2024</th>
+          <th data-field="wtp_2025">WTP 2025</th>
+          <th data-field="wtp_2026">WTP 2026</th>
+        </tr></thead>
+        <tbody data-draw="adviser_years"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="ss-grid">
+    <section class="ss-card" id="quarters">
+      <h2>Quarters</h2>
+      <p class="note">Team written, banked and WTP by quarter.</p>
+      <div class="ss-tablewrap">
+        <table class="ss-table" data-source="quarters" data-row-key="quarter">
+          <thead><tr>
+            <th data-field="quarter">Quarter</th>
+            <th data-field="written">Written</th>
+            <th data-field="banked">Banked</th>
+            <th data-field="wtp">WTP</th>
+          </tr></thead>
+          <tbody data-draw="quarters"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ss-card" id="pace">
+      <h2>Cumulative written by year</h2>
+      <p class="note">2026 against each year since 2023, team as it stood that year.</p>
+      <div class="ss-chart" data-draw="cumulative" data-source="cumulative"></div>
+    </section>
+  </div>
+
+  <details id="notes">
+    <summary>Definitions and where the numbers come from</summary>
+    <dl>
+      <dt>Written</dt><dd>Business written in the month, as on the WTP tab's W rows.</dd>
+      <dt>Banked</dt><dd>Fees paid in the month, as on the WTP tab's B rows.</dd>
+      <dt>WTP</dt><dd>Written to paid: banked ÷ written.</dd>
+      <dt>Like for like</dt><dd>When the latest month is only part way through, comparisons with the prior month and with 2025 scale that month to the same share of the month.</dd>
+      <dt>Projection</dt><dd>Year to date + (year to date ÷ months active) × months left in the year, as on the WTP tab. Months active run from January for the team and from an adviser's first month on the tab (a £0 month counts). A month built from weekly reports counts as the share of the month elapsed, so months left includes the rest of that month.</dd>
+      <dt>Targets</dt><dd>2026 written and banked targets from the Targets tab. Simran and Ramunas have written targets but no banked target.</dd>
+      <dt>Last update</dt><dd><span data-draw="v" data-fmt="text" data-source="report_status" data-field="last_report" data-row="0">—</span></dd>
+      <dt>Previous years</dt><dd>2023–2025 adviser figures from the WTP tab: Alex, Armani, Robin, Tatiana and Manny (2023); plus Martin (2024); Alex, Armani, Robin, Manny, Martin and Priti (2025). They add up exactly to the tab's team totals for each month.</dd>
+      <dt>Left out</dt><dd>Martin's January 2026 figure (£293 written), which the WTP tab also keeps out of the team total.</dd>
+    </dl>
+  </details>
+</div>
+
+<script>
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const num = (x) => (x == null || x === '' ? 0 : Number(x));
+
+  dash.calc('team_ytd', {
+    title: 'Team year to date',
+    description: 'Team written, banked, WTP and straight-line year-end projection against summed targets.',
+    inputs: ['written_2026', 'targets_2026', 'report_status', 'adviser_history'],
+    fn: (written_2026, targets_2026, report_status, adviser_history) => {
+      const s = report_status[0];
+      const last = Number(s.latest_month);
+      const asOf = new Date(s.as_of);
+      const dim = new Date(Date.UTC(asOf.getUTCFullYear(), last, 0)).getUTCDate();
+      const elapsed = s.latest_month_final ? last : last - 1 + asOf.getUTCDate() / dim;
+      const sum = (rows, f, pred) => rows.filter(pred).reduce((a, r) => a + Number(r[f] || 0), 0);
+      const written = sum(written_2026, 'written', () => true);
+      const banked = sum(written_2026, 'banked', () => true);
+      const wt = sum(targets_2026, 'written_target', () => true);
+      const bt = sum(targets_2026, 'banked_target', () => true);
+      const latest = sum(written_2026, 'written', (r) => Number(r.month) === last);
+      const prior = sum(written_2026, 'written', (r) => Number(r.month) === last - 1);
+      const frac = elapsed - (last - 1);
+      const w25 = sum(adviser_history, 'written', (r) => Number(r.year) === 2025 && Number(r.month) < last)
+        + frac * sum(adviser_history, 'written', (r) => Number(r.year) === 2025 && Number(r.month) === last);
+      const projW = written / elapsed * 12, projB = banked / elapsed * 12;
+      const names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return [{
+        written, banked, wtp: written ? banked / written : null,
+        months_elapsed: elapsed, proj_written: projW, proj_banked: projB,
+        written_target: wt, banked_target: bt,
+        written_att: projW / wt, banked_att: projB / bt,
+        latest_label: names[last - 1] + (s.latest_month_final ? '' : ' to date'),
+        latest_written: latest, vs_prior: prior ? latest / (prior * frac) - 1 : null,
+        written_2025_same: w25, vs_2025: w25 ? written / w25 - 1 : null,
+      }];
+    },
+  });
+
+  dash.calc('adviser_ytd', {
+    title: 'Adviser year to date',
+    description: 'Each adviser’s written, banked, WTP and straight-line projection from their first reported month.',
+    inputs: ['written_2026', 'targets_2026', 'report_status'],
+    fn: (written_2026, targets_2026, report_status) => {
+      const s = report_status[0];
+      const last = Number(s.latest_month);
+      const asOf = new Date(s.as_of);
+      const dim = new Date(Date.UTC(asOf.getUTCFullYear(), last, 0)).getUTCDate();
+      const elapsed = s.latest_month_final ? last : last - 1 + asOf.getUTCDate() / dim;
+      const by = new Map();
+      for (const r of written_2026) {
+        const a = by.get(r.adviser) || { adviser: r.adviser, written: 0, banked: 0, first: 13 };
+        a.written += Number(r.written || 0); a.banked += Number(r.banked || 0);
+        a.first = Math.min(a.first, Number(r.month));
+        by.set(r.adviser, a);
+      }
+      const rows = [...by.values()].map((a) => {
+        const t = targets_2026.find((x) => x.adviser === a.adviser);
+        const months = Math.max(elapsed - (a.first - 1), 0.5);
+        const left = Math.max(12 - elapsed, 0);
+        const pw = a.written + a.written / months * left, pb = a.banked + a.banked / months * left;
+        return {
+          adviser: a.adviser, written: a.written, banked: a.banked,
+          wtp: a.written ? a.banked / a.written : null, months_reported: months,
+          proj_written: pw, written_target: t && t.written_target ? t.written_target : null, written_att: t && t.written_target ? pw / t.written_target : null,
+          proj_banked: pb, banked_target: t && t.banked_target ? t.banked_target : null, banked_att: t && t.banked_target ? pb / t.banked_target : null,
+        };
+      });
+      return rows.sort((x, y) => y.written - x.written);
+    },
+  });
+
+  dash.calc('monthly_2026', {
+    title: 'Team by month 2026',
+    description: 'Team written, banked and WTP per month in 2026, beside 2025 written.',
+    inputs: ['written_2026', 'adviser_history'],
+    fn: (written_2026, adviser_history) => {
+      const names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return names.map((m, i) => {
+        const rs = written_2026.filter((r) => Number(r.month) === i + 1);
+        const w = rs.reduce((a, r) => a + Number(r.written || 0), 0);
+        const b = rs.reduce((a, r) => a + Number(r.banked || 0), 0);
+        const h25 = adviser_history.filter((r) => Number(r.year) === 2025 && Number(r.month) === i + 1);
+        return { month: i + 1, month_name: m, reported: rs.length > 0, written: rs.length ? w : null, banked: rs.length ? b : null, wtp: w ? b / w : null, written_2025: h25.length ? h25.reduce((a, r) => a + Number(r.written || 0), 0) : null };
+      });
+    },
+  });
+
+  dash.calc('quarters', {
+    title: 'Team by quarter 2026',
+    description: 'Team written, banked and WTP per quarter in 2026.',
+    inputs: ['written_2026'],
+    fn: (written_2026) => [1, 2, 3, 4].map((q) => {
+      const rs = written_2026.filter((r) => Math.ceil(Number(r.month) / 3) === q);
+      const w = rs.reduce((a, r) => a + Number(r.written || 0), 0);
+      const b = rs.reduce((a, r) => a + Number(r.banked || 0), 0);
+      return { quarter: 'Q' + q, written: rs.length ? w : null, banked: rs.length ? b : null, wtp: w ? b / w : null };
+    }),
+  });
+
+  dash.calc('all_months', {
+    title: 'All years by adviser and month',
+    description: '2023–2025 adviser figures from the WTP tab joined with 2026.',
+    inputs: ['adviser_history', 'written_2026'],
+    fn: (adviser_history, written_2026) => [
+      ...adviser_history.map((r) => ({ year: Number(r.year), month: Number(r.month), adviser: r.adviser, written: Number(r.written || 0), banked: Number(r.banked || 0) })),
+      ...written_2026.map((r) => ({ year: 2026, month: Number(r.month), adviser: r.adviser, written: Number(r.written || 0), banked: Number(r.banked || 0) })),
+    ],
+  });
+
+  dash.calc('pivot', {
+    title: 'Written by adviser and month',
+    description: 'Written per adviser per month for each year, with a team row per year.',
+    inputs: ['all_months'],
+    fn: (all_months) => {
+      const names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const out = [];
+      const years = [...new Set(all_months.map((r) => r.year))].sort();
+      for (const y of years) {
+        const by = new Map();
+        const team = { year: y, adviser: 'Team', total: 0 };
+        for (const r of all_months.filter((q) => q.year === y)) {
+          const a = by.get(r.adviser) || { year: y, adviser: r.adviser, total: 0 };
+          const m = names[r.month - 1];
+          a[m] = (a[m] || 0) + r.written; a.total += r.written;
+          team[m] = (team[m] || 0) + r.written; team.total += r.written;
+          by.set(r.adviser, a);
+        }
+        out.push(...[...by.values()].sort((p, q) => q.total - p.total), team);
+      }
+      return out;
+    },
+  });
+
+  dash.calc('cumulative', {
+    title: 'Cumulative written by year',
+    description: 'Running team written through each year, 2023 to date.',
+    inputs: ['all_months'],
+    fn: (all_months) => {
+      const out = [];
+      const years = [...new Set(all_months.map((r) => r.year))].sort();
+      for (const y of years) {
+        const last = Math.max(...all_months.filter((r) => r.year === y).map((r) => r.month));
+        let c = 0;
+        for (let m = 1; m <= last; m++) {
+          c += all_months.filter((r) => r.year === y && r.month === m).reduce((a, r) => a + r.written, 0);
+          out.push({ year: y, month: m, cum_written: c });
+        }
+      }
+      return out;
+    },
+  });
+
+  dash.calc('years', {
+    title: 'Team by year',
+    description: 'Team written, banked and WTP per year, with growth in written on the year before (same months for 2026 to date).',
+    inputs: ['all_months', 'team_ytd'],
+    fn: (all_months, team_ytd) => {
+      const t = team_ytd[0];
+      const tot = (y, f, upTo = 12) => all_months.filter((r) => r.year === y && r.month <= upTo).reduce((a, r) => a + r[f], 0);
+      const lastMonth = Math.max(...all_months.filter((r) => r.year === 2026).map((r) => r.month));
+      const rows = [2023, 2024, 2025].map((y) => {
+        const w = tot(y, 'written'), b = tot(y, 'banked'), pw = tot(y - 1, 'written');
+        return { period: String(y), written: w, banked: b, wtp: w ? b / w : null, growth: pw ? w / pw - 1 : null };
+      });
+      const frac = t.months_elapsed - (lastMonth - 1);
+      const w26 = tot(2026, 'written'), b26 = tot(2026, 'banked');
+      const same25 = tot(2025, 'written', lastMonth - 1) + frac * all_months.filter((r) => r.year === 2025 && r.month === lastMonth).reduce((a, r) => a + r.written, 0);
+      rows.push({ period: '2026 to date', written: w26, banked: b26, wtp: w26 ? b26 / w26 : null, growth: same25 ? w26 / same25 - 1 : null });
+      const f25 = tot(2025, 'written');
+      rows.push({ period: '2026 projected', written: t.proj_written, banked: t.proj_banked, wtp: t.proj_written ? t.proj_banked / t.proj_written : null, growth: f25 ? t.proj_written / f25 - 1 : null });
+      return rows;
+    },
+  });
+
+  dash.calc('adviser_years', {
+    title: 'Advisers by year',
+    description: 'Each adviser’s written and WTP per year, with their 2026 projection; current team first.',
+    inputs: ['all_months', 'adviser_ytd'],
+    fn: (all_months, adviser_ytd) => {
+      const by = new Map();
+      for (const r of all_months) {
+        const a = by.get(r.adviser) || { adviser: r.adviser };
+        a['written_' + r.year] = (a['written_' + r.year] || 0) + r.written;
+        a['banked_' + r.year] = (a['banked_' + r.year] || 0) + r.banked;
+        by.set(r.adviser, a);
+      }
+      const rows = [...by.values()].map((a) => {
+        const p = adviser_ytd.find((x) => x.adviser === a.adviser);
+        const o = { adviser: a.adviser, current: !!p, proj_2026: p ? p.proj_written : null };
+        for (const y of [2023, 2024, 2025, 2026]) {
+          const w = a['written_' + y];
+          o['written_' + y] = w == null ? null : w;
+          o['wtp_' + y] = w ? a['banked_' + y] / w : null;
+        }
+        return o;
+      });
+      const latest = (r) => r.written_2026 ?? r.written_2025 ?? r.written_2024 ?? r.written_2023 ?? 0;
+      const lastYear = (r) => [2026, 2025, 2024, 2023].find((y) => r['written_' + y] != null);
+      return rows.sort((p, q) => (q.current - p.current) || (lastYear(q) - lastYear(p)) || (latest(q) - latest(p)));
+    },
+  });
+
+  // ---------- formatting ----------
+  const gbpFull = (v) => '£' + d3.format(',.0f')(v);
+  const gbp = (v) => {
+    const a = Math.abs(v);
+    if (a >= 1e6) return '£' + d3.format('.2f')(v / 1e6) + 'm';
+    if (a >= 1e4) return '£' + d3.format('.1f')(v / 1e3) + 'k';
+    return gbpFull(v);
+  };
+  const fmt = {
+    gbp, pct: (v) => d3.format('.1%')(v), pct0: (v) => d3.format('.0%')(v),
+    signed: (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + d3.format('.1%')(Math.abs(v)),
+    text: (v) => String(v),
+    date: (v) => d3.utcFormat('%-d %b %Y')(new Date(v)),
+  };
+  window.ssFmt = { gbp, gbpFull, fmt };
+
+  // ---------- single values ----------
+  dash.draw('v', (el) => {
+    const d = dash.data(el.dataset.source);
+    const row = d.status === 'ok' && Array.isArray(d.data) ? d.data[Number(el.dataset.row || 0)] : null;
+    const v = row ? row[el.dataset.field] : null;
+    el.classList.remove('ss-good', 'ss-bad');
+    if (v == null || v === '' || (typeof v === 'number' && !isFinite(v))) { el.textContent = '—'; return; }
+    const f = fmt[el.dataset.fmt] || fmt.text;
+    el.textContent = f(v);
+    if (el.dataset.fmt === 'signed') el.classList.add(v >= 0 ? 'ss-good' : 'ss-bad');
+  });
+
+  // ---------- monthly chart ----------
+  dash.draw('monthly', (el) => {
+    const d = dash.data('monthly_2026');
+    el.replaceChildren();
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const rows = d.data;
+    const W = Math.max(el.clientWidth, 280), H = 280;
+    const c = dash.colors;
+    const legend = d3.select(el).append('div').attr('class', 'ss-legend');
+    [['Written 2026', c[0], 'b'], ['Banked 2026', c[1], 'b'], ['Written 2025', null, 'l']].forEach(([n, col, k]) => {
+      const s = legend.append('span');
+      const i = s.append('i');
+      if (k === 'b') i.style('background', col);
+      else i.style('background', 'none').style('border-top', '2px dashed var(--cds-chart-reference)').style('height', '0').style('border-radius', '0');
+      s.append('span').text(n);
+    });
+    const max = d3.max(rows, (r) => Math.max(r.written || 0, r.written_2025 || 0)) || 1;
+    const y = d3.scaleLinear([0, max * 1.08], [H - 24, 8]).nice();
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).style('display', 'block').style('overflow', 'visible');
+    const ticks = y.ticks(5);
+    const probe = svg.append('text').attr('font-size', 11).text(gbp(ticks[ticks.length - 1]));
+    const ml = probe.node().getComputedTextLength() + 10; probe.remove();
+    const x = d3.scaleBand(rows.map((r) => r.month_name), [ml, W - 4]).paddingInner(0.25).paddingOuter(0.1);
+    const xi = d3.scaleBand(['w', 'b'], [0, x.bandwidth()]).padding(0.08);
+    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', ml).attr('x2', W - 4).attr('y1', (t) => y(t)).attr('y2', (t) => y(t)).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', ml - 6).attr('y', (t) => y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)').text((t) => gbp(t));
+    const narrow = W < 460;
+    svg.append('g').selectAll('text').data(rows).join('text').attr('x', (r) => x(r.month_name) + x.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)').text((r, i) => (narrow && i % 2 ? '' : r.month_name));
+    const bw = Math.min(xi.bandwidth(), 16);
+    const g = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (r) => `translate(${x(r.month_name)},0)`);
+    [['written', 'w', c[0]], ['banked', 'b', c[1]]].forEach(([f, k, col]) => {
+      g.filter((r) => r[f] != null).append('rect').attr('x', xi(k) + (xi.bandwidth() - bw) / 2).attr('width', bw).attr('y', (r) => y(r[f])).attr('height', (r) => y(0) - y(r[f])).attr('rx', 2).attr('fill', col);
+    });
+    const line = d3.line().defined((r) => r.written_2025 != null).x((r) => x(r.month_name) + x.bandwidth() / 2).y((r) => y(r.written_2025));
+    svg.append('path').datum(rows).attr('d', line).attr('fill', 'none').attr('stroke', 'var(--cds-chart-reference)').attr('stroke-width', 2).attr('stroke-dasharray', '4 4');
+    svg.append('line').attr('x1', ml).attr('x2', W - 4).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-axis)');
+    const tip = d3.select(el).append('div').attr('class', 'ss-tip').style('display', 'none');
+    const hl = svg.append('rect').attr('fill', 'var(--cds-chart-grid)').attr('opacity', 0).attr('y', 8).attr('height', H - 32).lower();
+    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => x(r.month_name) - x.step() * x.paddingInner() / 2).attr('width', x.step()).attr('y', 0).attr('height', H - 20).attr('fill', 'transparent')
+      .on('pointermove', (ev, r) => {
+        hl.attr('x', x(r.month_name) - 3).attr('width', x.bandwidth() + 6).attr('opacity', 0.6);
+        tip.style('display', null).replaceChildren();
+        tip.append('div').attr('class', 't').text(r.month_name + ' 2026');
+        const add = (col, n, v) => { const l = tip.append('div'); if (col) l.append('span').attr('class', 'sw').style('background', col); l.append('span').text(n + ': ' + v); };
+        add(c[0], 'Written', r.written != null ? gbpFull(r.written) : 'not reported');
+        add(c[1], 'Banked', r.banked != null ? gbpFull(r.banked) : 'not reported');
+        if (r.wtp != null) add(null, 'WTP', d3.format('.1%')(r.wtp));
+        if (r.written_2025 != null) add(null, 'Written 2025', gbpFull(r.written_2025));
+        const [px, py] = d3.pointer(ev, el);
+        const tw = tip.node().offsetWidth;
+        tip.style('left', Math.max(0, Math.min(px + 12, el.clientWidth - tw)) + 'px').style('top', Math.max(0, py - 60) + 'px');
+      })
+      .on('pointerleave', () => { tip.style('display', 'none'); hl.attr('opacity', 0); });
+  });
+
+  // ---------- scorecard ----------
+  dash.draw('scorecard', (tb) => {
+    const d = dash.data('adviser_ytd');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const att = (td, v) => {
+      if (v == null) { td.text('—'); return; }
+      const w = td.append('div').attr('class', 'ss-att');
+      const b = w.append('div').attr('class', 'bar');
+      b.append('i').style('width', Math.min(v, 1) * 100 + '%').style('background', v >= 1 ? 'var(--color-ok)' : v >= 0.85 ? dash.colors[0] : 'var(--cds-chart-status-critical)');
+      w.append('span').text(d3.format('.0%')(v));
+    };
+    const tr = d3.select(tb).selectAll('tr').data(d.data).join('tr');
+    tr.each(function (r) {
+      const row = d3.select(this);
+      row.append('td').text(r.adviser);
+      row.append('td').text(gbpFull(r.written));
+      row.append('td').text(gbpFull(r.banked));
+      row.append('td').text(r.wtp == null ? '—' : d3.format('.1%')(r.wtp));
+      row.append('td').text(gbpFull(r.proj_written));
+      row.append('td').text(r.written_target == null ? '—' : gbpFull(r.written_target));
+      att(row.append('td'), r.written_att);
+      row.append('td').text(gbpFull(r.proj_banked));
+      row.append('td').text(r.banked_target == null ? '—' : gbpFull(r.banked_target));
+      att(row.append('td'), r.banked_att);
+    });
+  });
+
+  // ---------- pivot heatmap ----------
+  const pivotYear = () => Number(dash.params().pivot_year ?? 2026);
+
+  dash.draw('yearsel', (sel) => {
+    const d = dash.data('pivot');
+    const years = d.status === 'ok' ? [...new Set(d.data.map((r) => r.year))].sort((a, b) => b - a) : [];
+    sel.replaceChildren(...years.map((y) => new Option(String(y), String(y))));
+    sel.value = String(pivotYear());
+    sel.onchange = () => dash.setParams({ pivot_year: Number(sel.value) });
+  });
+
+  dash.draw('pivot', (tb) => {
+    const d = dash.data('pivot');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const yr = pivotYear();
+    const rows = d.data.filter((r) => r.year === yr);
+    const ad = rows.filter((r) => r.adviser !== 'Team');
+    const max = d3.max(ad, (r) => d3.max(MONTHS, (m) => r[m] || 0)) || 1;
+    const tr = d3.select(tb).selectAll('tr').data(rows).join('tr')
+      .attr('class', (r) => (r.adviser === 'Team' ? 'total' : null))
+      .attr('data-key', (r) => encodeURIComponent(String(r.year)) + ',' + encodeURIComponent(r.adviser));
+    tr.each(function (r) {
+      const row = d3.select(this);
+      row.append('td').text(r.adviser);
+      MONTHS.forEach((m) => {
+        const v = r[m];
+        const td = row.append('td').attr('class', 'h').text(v == null ? '' : gbp(v));
+        if (v != null && r.adviser !== 'Team') {
+          td.style('background', `color-mix(in srgb, ${dash.colors[0]} ${Math.round(8 + 62 * (v / max))}%, transparent)`);
+          if (v / max > 0.55) td.style('color', 'white');
+        }
+      });
+      row.append('td').text(gbp(r.total));
+    });
+  });
+
+  // ---------- year on year ----------
+  dash.draw('years', (tb) => {
+    const d = dash.data('years');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const tr = d3.select(tb).selectAll('tr').data(d.data).join('tr').attr('class', (r) => (r.period === '2026 projected' ? 'former' : null));
+    tr.each(function (r) {
+      const row = d3.select(this);
+      row.append('td').text(r.period);
+      row.append('td').text(r.written == null ? '—' : gbpFull(r.written));
+      row.append('td').text(r.banked == null ? '—' : gbpFull(r.banked));
+      row.append('td').text(r.wtp == null ? '—' : d3.format('.1%')(r.wtp));
+      row.append('td').attr('class', r.growth == null ? null : r.growth >= 0 ? 'ss-good' : 'ss-bad').text(r.growth == null ? '—' : fmt.signed(r.growth));
+    });
+  });
+
+  dash.draw('adviser_years', (tb) => {
+    const d = dash.data('adviser_years');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const tr = d3.select(tb).selectAll('tr').data(d.data).join('tr').attr('class', (r) => (r.current ? null : 'former'));
+    tr.each(function (r) {
+      const row = d3.select(this);
+      row.append('td').text(r.adviser);
+      ['written_2023', 'written_2024', 'written_2025', 'written_2026', 'proj_2026'].forEach((f) => row.append('td').text(r[f] == null ? '' : gbpFull(r[f])));
+      ['wtp_2023', 'wtp_2024', 'wtp_2025', 'wtp_2026'].forEach((f) => row.append('td').text(r[f] == null ? '' : d3.format('.1%')(r[f])));
+    });
+  });
+
+  // ---------- quarters ----------
+  dash.draw('quarters', (tb) => {
+    const d = dash.data('quarters');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    const tr = d3.select(tb).selectAll('tr').data(d.data).join('tr');
+    tr.each(function (r) {
+      const row = d3.select(this);
+      row.append('td').text(r.quarter);
+      row.append('td').text(r.written == null ? '—' : gbpFull(r.written));
+      row.append('td').text(r.banked == null ? '—' : gbpFull(r.banked));
+      row.append('td').text(r.wtp == null ? '—' : d3.format('.1%')(r.wtp));
+    });
+  });
+
+  // ---------- cumulative ----------
+  dash.draw('cumulative', (el) => {
+    const d = dash.data('cumulative');
+    el.replaceChildren();
+    if (d.status !== 'ok') { el.textContent = '—'; return; }
+    const W = Math.max(el.clientWidth, 280), H = 280;
+    const years = [...new Set(d.data.map((r) => r.year))].sort();
+    const series = years.map((y) => ({ year: y, pts: d.data.filter((r) => r.year === y).sort((a, b) => a.month - b.month) }));
+    const max = d3.max(d.data, (r) => r.cum_written) || 1;
+    const y = d3.scaleLinear([0, max], [H - 24, 10]).nice();
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).style('display', 'block').style('overflow', 'visible');
+    const ticks = y.ticks(5);
+    const probe = svg.append('text').attr('font-size', 11).text(gbp(ticks[ticks.length - 1]));
+    const ml = probe.node().getComputedTextLength() + 10; probe.remove();
+    const probe2 = svg.append('text').attr('font-size', 11).text('2026 ' + gbp(max));
+    const mr = probe2.node().getComputedTextLength() + 10; probe2.remove();
+    const x = d3.scaleLinear([1, 12], [ml, W - mr]);
+    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', ml).attr('x2', W - mr).attr('y1', (t) => y(t)).attr('y2', (t) => y(t)).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', ml - 6).attr('y', (t) => y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)').text((t) => gbp(t));
+    const xt = W < 460 ? [1, 4, 7, 10, 12] : d3.range(1, 13);
+    svg.append('g').selectAll('text').data(xt).join('text').attr('x', (m) => x(m)).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).attr('fill', 'var(--color-fg-muted)').text((m) => MONTHS[m - 1]);
+    const line = d3.line().x((p) => x(p.month)).y((p) => y(p.cum_written));
+    const col = (yr) => (yr === 2026 ? dash.colors[0] : 'var(--cds-chart-muted)');
+    svg.append('g').selectAll('path').data(series).join('path').attr('d', (s) => line(s.pts)).attr('fill', 'none').attr('stroke', (s) => col(s.year)).attr('stroke-width', (s) => (s.year === 2026 ? 2.5 : 1.5)).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+    // end labels, nudged apart
+    const ends = series.filter((s) => s.pts.length).map((s) => { const p = s.pts[s.pts.length - 1]; return { s, p, ly: y(p.cum_written) }; }).sort((a, b) => a.ly - b.ly);
+    for (let i = 1; i < ends.length; i++) if (ends[i].ly - ends[i - 1].ly < 13) ends[i].ly = ends[i - 1].ly + 13;
+    const lab = svg.append('g').selectAll('text').data(ends).join('text').attr('x', (e) => x(e.p.month) + 6).attr('y', (e) => e.ly).attr('dy', '0.32em').attr('font-size', 11)
+      .attr('fill', (e) => (e.s.year === 2026 ? 'var(--color-fg)' : 'var(--color-fg-muted)')).attr('font-weight', (e) => (e.s.year === 2026 ? 600 : null))
+      .text((e) => e.s.year + ' ' + gbp(e.p.cum_written));
+    svg.append('g').selectAll('circle').data(ends.filter((e) => e.s.year === 2026)).join('circle').attr('cx', (e) => x(e.p.month)).attr('cy', (e) => y(e.p.cum_written)).attr('r', 3.5).attr('fill', dash.colors[0]);
+    svg.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--cds-chart-axis)');
+    const tip = d3.select(el).append('div').attr('class', 'ss-tip').style('display', 'none');
+    const rule = svg.append('line').attr('y1', 10).attr('y2', H - 24).attr('stroke', 'var(--cds-chart-reference)').attr('opacity', 0);
+    svg.append('rect').attr('x', ml).attr('width', W - mr - ml).attr('y', 0).attr('height', H - 20).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [mx] = d3.pointer(ev);
+        const m = Math.max(1, Math.min(12, Math.round(x.invert(mx))));
+        rule.attr('x1', x(m)).attr('x2', x(m)).attr('opacity', 1);
+        tip.style('display', null).replaceChildren();
+        tip.append('div').attr('class', 't').text('To end of ' + MONTHS[m - 1]);
+        [...series].reverse().forEach((s) => {
+          const p = s.pts.find((q) => q.month === m);
+          if (!p) return;
+          const l = tip.append('div');
+          l.append('span').attr('class', 'sw').style('background', col(s.year));
+          l.append('span').text(s.year + ': ' + gbpFull(p.cum_written));
+        });
+        const [px, py] = d3.pointer(ev, el);
+        const tw = tip.node().offsetWidth;
+        tip.style('left', Math.max(0, Math.min(px + 12, el.clientWidth - tw)) + 'px').style('top', Math.max(0, py - 70) + 'px');
+      })
+      .on('pointerleave', () => { tip.style('display', 'none'); rule.attr('opacity', 0); });
+  });
+</script>
+
+<p class="ss-foot">Figures to 2026-11-19. Source: Team Stats workbook, WTP and Targets tabs.</p>
+</div>
+</body>
+</html>
